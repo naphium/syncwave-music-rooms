@@ -1,0 +1,1 @@
+CREATE POLICY "anyone read uploads" ON storage.objects FOR SELECT TO anon, authenticated USING (bucket_id = 'uploads');

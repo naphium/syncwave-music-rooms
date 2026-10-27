@@ -61,7 +61,7 @@ function Room() {
       .on("broadcast", { event: EVENTS.react }, ({ payload }) => float(payload.e))
       .on("presence", { event: "sync" }, () => {
         const ps = ch.presenceState<Member>();
-        setMembers(Object.values(ps).map((a) => a[0]).sort((a, b) => a.joinedAt - b.joinedAt));
+        setMembers(Object.values(ps).map((a) => a[0] as Member).filter(Boolean).sort((a, b) => a.joinedAt - b.joinedAt));
       })
       .subscribe(async (st) => {
         if (st !== "SUBSCRIBED") return;
@@ -105,7 +105,7 @@ function Room() {
     }),
     vote: (qid: string) => commit((s) => ({ ...s, queue: s.queue.map((q) => q.qid !== qid ? q : { ...q, votes: q.votes.includes(me.uid) ? q.votes.filter((v) => v !== me.uid) : [...q.votes, me.uid] }) })),
     remove: (qid: string) => commit((s) => ({ ...s, queue: s.queue.filter((q) => q.qid !== qid) })),
-    up: (qid: string) => commit((s) => { const q = [...s.queue]; const i = q.findIndex((x) => x.qid === qid); if (i > 0) [q[i - 1], q[i]] = [q[i], q[i - 1]]; return { ...s, queue: q }; }),
+    up: (qid: string) => commit((s) => { const q = [...s.queue]; const i = q.findIndex((x) => x.qid === qid); if (i > 0) [q[i - 1], q[i]] = [q[i]!, q[i - 1]!]; return { ...s, queue: q }; }),
   };
 
   const isLeader = members[0]?.uid === me.uid || members.length === 0;
@@ -255,7 +255,7 @@ function MusicSearch({ onAdd }: { onAdd: (t: Track) => void }) {
   const addLink = () => {
     const u = link.trim(); if (!u) return;
     const yt = u.match(/(?:youtu\.be\/|v=|shorts\/)([\w-]{11})/);
-    if (yt) onAdd({ id: yt[1], source: "youtube", title: "YouTube track", artist: "Direct link", artwork: `https://i.ytimg.com/vi/${yt[1]}/hqdefault.jpg`, duration: 0, src: yt[1] });
+    if (yt?.[1]) onAdd({ id: yt[1], source: "youtube", title: "YouTube track", artist: "Direct link", artwork: `https://i.ytimg.com/vi/${yt[1]}/hqdefault.jpg`, duration: 0, src: yt[1]! });
     else onAdd({ id: u, source: "url", title: decodeURIComponent(u.split("/").pop() || "Audio link"), artist: "Direct link", artwork: "", duration: 0, src: u });
     setLink("");
   };

@@ -26,7 +26,7 @@ export function useClockSync() {
       const best = samples.slice(0, 3);
       const offset = best.reduce((s, x) => s + x.offset, 0) / best.length;
       offsetRef.current = offset;
-      setState({ offset, rtt: best[0].rtt, synced: true });
+      setState({ offset, rtt: best[0]!.rtt, synced: true });
     }
     burst();
     const id = setInterval(burst, 20000);

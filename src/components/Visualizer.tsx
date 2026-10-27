@@ -16,7 +16,7 @@ export function Visualizer({ analyserRef, playing, hue }: { analyserRef: React.M
       if (an) { an.getByteFrequencyData(bins); real = bins.some((b) => b > 0); }
       const n = 64, bw = w / n;
       for (let i = 0; i < n; i++) {
-        const v = real ? bins[i] / 255 : playRef.current ? 0.25 + 0.5 * Math.abs(Math.sin(t * 1.7 + i * 0.35) * Math.cos(t * 0.6 + i * 0.12)) : 0.04;
+        const v = real ? bins[i]! / 255 : playRef.current ? 0.25 + 0.5 * Math.abs(Math.sin(t * 1.7 + i * 0.35) * Math.cos(t * 0.6 + i * 0.12)) : 0.04;
         const bh = v * h;
         g.fillStyle = `oklch(0.8 0.2 ${(hue + i * 2) % 360})`;
         g.shadowColor = g.fillStyle; g.shadowBlur = 16;

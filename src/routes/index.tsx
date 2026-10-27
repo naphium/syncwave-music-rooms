@@ -31,7 +31,7 @@ function Home() {
   const doJoin = (e: React.FormEvent) => {
     e.preventDefault();
     const v = join.trim(); if (!v) return;
-    const id = v.includes("/room/") ? v.split("/room/")[1].split(/[?#/]/)[0] : v;
+    const id = v.includes("/room/") ? (v.split("/room/")[1] ?? "").split(/[?#/]/)[0] ?? v : v;
     nav({ to: "/room/$id", params: { id } });
   };
   return (

@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      site_settings: {
+        Row: {
+          accent_hue: number
+          announcement: string
+          donate: string
+          facebook: string
+          github: string
+          id: number
+          instagram: string
+          portfolio: string
+          site_name: string
+          tagline: string
+          updated_at: string
+        }
+        Insert: {
+          accent_hue?: number
+          announcement?: string
+          donate?: string
+          facebook?: string
+          github?: string
+          id?: number
+          instagram?: string
+          portfolio?: string
+          site_name?: string
+          tagline?: string
+          updated_at?: string
+        }
+        Update: {
+          accent_hue?: number
+          announcement?: string
+          donate?: string
+          facebook?: string
+          github?: string
+          id?: number
+          instagram?: string
+          portfolio?: string
+          site_name?: string
+          tagline?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
